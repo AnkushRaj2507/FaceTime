@@ -40,16 +40,14 @@ services:
   # ===========================
   # Frontend (Vite Dev)
   # ===========================
-  - type: web
+  - type: static
     name: mern-frontend
-    env: node
-    plan: free
-    buildCommand: "cd frontend && npm install"
-    startCommand: "cd frontend && npm run dev -- --host"
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "frontend/dist"
     envVars:
       - key: NODE_VERSION
         value: 18
-        
+
       - key: VITE_STREAM_API_KEY
         value: 8v8nevznke4m
 
