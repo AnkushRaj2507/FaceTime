@@ -1,0 +1,45 @@
+version: 1
+
+# Backend service (Node / Express)
+services:
+  - type: web
+    name: videochat-backend
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: cd backend && npm ci
+    startCommand: cd backend && npm run start
+    autoDeploy: true
+    envVars:
+      - key: MONGO_URI
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+      - key: JWT_SECRET_KEY
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+      - key: STEAM_API_KEY
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+      - key: STEAM_API_SECRET
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+      - key: OPENAI_API_KEY
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+      - key: GEMINI_API_KEY
+        value: "<SET_VIA_RENDER_DASHBOARD>"
+
+# Frontend static site (Vite build -> dist)
+  - type: static_site
+    name: videochat-frontend
+    env: static
+    plan: free
+    region: oregon
+    buildCommand: cd frontend && npm ci && npm run build
+    publishPath: frontend/dist
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: "https://your-backend-service.onrender.com"  # update after backend is deployed
+
+# Notes:
+# - Do NOT commit real secrets to this file. Replace placeholder values by creating
+#   Environment Secrets in the Render dashboard (or use the Render CLI) and set them
+#   for the backend service.
+# - After deploying backend, update VITE_API_BASE_URL to point to the backend's public URL.
+# - You can change plan / region based on your Render account.
