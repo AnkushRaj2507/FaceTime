@@ -7,7 +7,6 @@ services:
   - type: web
     name: mern-backend
     env: node
-    region: singapore
     plan: free
     buildCommand: "cd backend && npm install"
     startCommand: "cd backend && npm run dev"
@@ -44,7 +43,6 @@ services:
   - type: web
     name: mern-frontend
     env: node
-    region: singapore
     plan: free
     buildCommand: "cd frontend && npm install"
     startCommand: "cd frontend && npm run dev -- --host"
