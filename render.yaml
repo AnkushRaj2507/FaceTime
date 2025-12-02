@@ -25,17 +25,15 @@ services:
         value: "<SET_VIA_RENDER_DASHBOARD>"
 
 # Frontend static site (Vite build -> dist)
-  - type: static_site
-    name: videochat-frontend
-    env: static
+  - type: web
+    name: mern-frontend
+    env: node
     plan: free
-    region: oregon
-    buildCommand: cd frontend && npm ci && npm run build
-    publishPath: frontend/dist
-    autoDeploy: true
+    buildCommand: "cd frontend && npm install"
+    startCommand: "cd frontend && npm run dev -- --host"
     envVars:
-      - key: VITE_API_BASE_URL
-        value: "https://your-backend-service.onrender.com"  # update after backend is deployed
+      - key: VITE_API_URL
+        value: https://mern-backend.onrender.com
 
 # Notes:
 # - Do NOT commit real secrets to this file. Replace placeholder values by creating
