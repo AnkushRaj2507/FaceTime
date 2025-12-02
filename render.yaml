@@ -1,55 +1,57 @@
 version: 1
 
-# Backend service (Node / Express)
 services:
+  # ===========================
+  # Backend (Node / Express)
+  # ===========================
   - type: web
     name: mern-backend
     env: node
+    region: singapore
     plan: free
     buildCommand: "cd backend && npm install"
     startCommand: "cd backend && npm run dev"
     envVars:
+      - key: NODE_VERSION
+        value: 18
+
+      # Render provides PORT automatically
       - key: PORT
-        value: 5001
-      
-      # Database
+        value: 8000
+
+      # Secrets (set these manually in dashboard)
       - key: MONGO_URI
         sync: false
-
-      # Auth / JWT
       - key: JWT_SECRET_KEY
         sync: false
-
-      # Steam API
       - key: STEAM_API_KEY
         sync: false
       - key: STEAM_API_SECRET
         sync: false
-
-      # AI Providers
       - key: OPENAI_API_KEY
         sync: false
       - key: GEMINI_API_KEY
         sync: false
 
+      # CORS – update after deploy
+      - key: CORS_ORIGIN
+        value: https://YOUR-FRONTEND-URL.onrender.com
 
 
-  
-
-# Frontend static site (Vite build -> dist)
+  # ===========================
+  # Frontend (Vite Dev)
+  # ===========================
   - type: web
     name: mern-frontend
     env: node
+    region: singapore
     plan: free
     buildCommand: "cd frontend && npm install"
     startCommand: "cd frontend && npm run dev -- --host"
     envVars:
-      - key: VITE_API_URL
-        value: https://mern-backend.onrender.com
+      - key: NODE_VERSION
+        value: 18
 
-# Notes:
-# - Do NOT commit real secrets to this file. Replace placeholder values by creating
-#   Environment Secrets in the Render dashboard (or use the Render CLI) and set them
-#   for the backend service.
-# - After deploying backend, update VITE_API_BASE_URL to point to the backend's public URL.
-# - You can change plan / region based on your Render account.
+      # Set after backend deploy
+      - key: VITE_API_URL
+        value: https://YOUR-BACKEND-URL.onrender.com
