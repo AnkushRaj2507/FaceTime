@@ -5,7 +5,7 @@ services:
   # Backend (Node / Express)
   # ===========================
   - type: web
-    name: mern-backend
+    name: mern-backend-facetime
     env: node
     plan: free
     buildCommand: "cd backend && npm install"
@@ -40,7 +40,7 @@ services:
 # Frontend (Vite build + serve)
 # ===========================
   - type: web
-    name: mern-frontend
+    name: mern-frontend-facetime
     env: static
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "frontend/dist"
