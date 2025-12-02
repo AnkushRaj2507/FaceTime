@@ -49,6 +49,9 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 18
+        
+      - key: VITE_STREAM_API_KEY
+        value: 8v8nevznke4m
 
       # Set after backend deploy
       - key: VITE_API_URL
