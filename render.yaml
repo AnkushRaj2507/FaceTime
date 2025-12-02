@@ -3,26 +3,39 @@ version: 1
 # Backend service (Node / Express)
 services:
   - type: web
-    name: videochat-backend
+    name: mern-backend
     env: node
     plan: free
-    region: oregon
-    buildCommand: cd backend && npm ci
-    startCommand: cd backend && npm run start
-    autoDeploy: true
+    buildCommand: "cd backend && npm install"
+    startCommand: "cd backend && npm run dev"
     envVars:
+
+      - key: PORT
+        value: 5001
+      
+      # Database
       - key: MONGO_URI
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
+
+      # Auth / JWT
       - key: JWT_SECRET_KEY
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
+
+      # Steam API
       - key: STEAM_API_KEY
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
       - key: STEAM_API_SECRET
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
+
+      # AI Providers
       - key: OPENAI_API_KEY
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
       - key: GEMINI_API_KEY
-        value: "<SET_VIA_RENDER_DASHBOARD>"
+        sync: false
+
+
+
+  
 
 # Frontend static site (Vite build -> dist)
   - type: web
